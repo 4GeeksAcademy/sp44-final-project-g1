@@ -16,3 +16,16 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+# @api.route('/user', methods=['GET', 'POST'])
+# @api.route('/user', methods=['GET', 'POST'])
+
+"""login
+user: Crear GET y POST
+product: GET, POST, PUT
+category: GET, POST, PUT
+customer: GET, POST
+store: GET, POST
+product_store: GET, POST, PUT
+Bill: GET, POST
+"""
