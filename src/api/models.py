@@ -5,27 +5,18 @@ db = SQLAlchemy()
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    # A definir si es el QR
     id_user_ghop = db.Column(db.Integer, unique=False, nullable=False)
-    first_name = db.Column(db.String(50), unique=False, nullable=False)
-    last_name = db.Column(db.String(50), unique=False, nullable=False)
-    
-    # Estos datos los tenemos? Se requiere password --- sera un QR, que tipo de dato es??
-    username = db.Column(db.String(200), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(1000), unique=False, nullable=False)
-
+    fullname = db.Column(db.String(200), unique=True, nullable=False)
 
     def __repr__(self):
-        return f'<User {self.username}>'
+        return f'<User {self.fullname}>'
 
     def serialize(self):
         return {
             "id": self.id,
-            "username": self.username,
-            "first_name": self.first_name,
-            "last_name": self.last_name,
-            "email": self.email,
-            "is_active": self.is_active
+            "id_user_ghop": self.id_user_ghop,
+            "fullname": self.username     
         }
 
 
@@ -48,27 +39,13 @@ class Customer(db.Model):
         }
 
 
-class Store(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), unique=True, nullable=False)
-    address = db.Column(db.String(100), unique=False, nullable=False)
-    
-    def __repr__(self):
-        return f'<Store {self.name}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "address": self.address,
-        }
 
 
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True, nullable=False)
-    pricing = db.Column(db.Integer, unique=False, nullable=False)
-    category_id = db.Column(db.Integer, db.ForeignKey('category.id'), unique=False, nullable=False)
+    pricing = db.Column(db.Float, unique=False, nullable=False)
+    fk_category_id = db.Column(db.Integer, db.ForeignKey('category.id'), unique=False, nullable=False)
     category = db.relationship('Category')
     
     def __repr__(self):
@@ -80,25 +57,6 @@ class Product(db.Model):
             "name": self.name,
             "pricing": self.pricing,
             "category_id": self.category_id
-        }
-
-
-class Product_Store(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    fk_store_id = db.Column(db.Integer, db.ForeignKey('store.id'), unique=True, nullable=False)
-    fk_product_id = db.Column(db.Integer, db.ForeignKey('product.id'), unique=False, nullable=False)
-    store = db.relationship('Store')
-    product = db.relationship('Product', backref='Product_Store')
-
-
-    def __repr__(self):
-        return f'<Product_Store {self.store_id}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "product_id": self.product_id,
-            "store_id": self.store_id
         }
 
 
@@ -128,9 +86,8 @@ class Bill(db.Model):
     unit_price = db.Column(db.Integer, unique=False, nullable=False)
     
     fk_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    fk_store_id = db.Column(db.Integer, db.ForeignKey('store.id'), nullable=False)
     user = db.relationship('User')
-    store = db.relationship('Store')
+    
 
     def __repr__(self):
         return f'<Bill {self.created_at}>'
@@ -144,5 +101,4 @@ class Bill(db.Model):
             "quantity": self.quantity,
             "unit_price": self.unit_price,
             "user_id": self.user_id,
-            "store_id": self.store_id
         }
