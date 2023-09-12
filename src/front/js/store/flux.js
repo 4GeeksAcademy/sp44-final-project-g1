@@ -1,6 +1,8 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			user: false,
+			products: [],
 			message: null,
 			demo: [
 				{
@@ -21,15 +23,49 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 
+			Login: () => {
+				setStore({ user: true })
+			},
+
+			getProducts: async () => {
+				if (localStorage.getItem('products') !== null) {
+					// Si los datos de los products están en el almacenamiento local, obtén los datos de allí
+					const productsFromStorage = JSON.parse(localStorage.getItem('products'));
+					setStore({ products: productsFromStorage });
+
+				} else {
+					// Si no entonces realiza la solicitud a la API
+					const response = await fetch(process.env.BACKEND_URL + "/api/products");
+
+					if (response.ok) {
+						const data = await response.json();
+						localStorage.setItem('products', JSON.stringify(data.products));
+
+						// Actualiza el estado del store con los datos de los productos obtenidos
+						setStore({ products: data.products });
+					} else {
+						console.log('Error: ', response.status, response.statusText);
+					}
+
+				}
+			},
+
 			getMessage: async () => {
-				try{
+				try {
+
+					const requestOptions = {
+						method: "GET",
+						headers: { "Content-Type": "application/json" },
+						redirect: 'follow'
+					};
+
 					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
+					const resp = await fetch(process.env.BACKEND_URL + "/api/hello", requestOptions)
 					const data = await resp.json()
 					setStore({ message: data.message })
 					// don't forget to return something, that is how the async resolves
 					return data;
-				}catch(error){
+				} catch (error) {
 					console.log("Error loading message from backend", error)
 				}
 			},

@@ -4,6 +4,14 @@
     "workbench.editorAssociations": {   
         "*.md": "vscode.markdown.preview.editor"
     },
+    "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "[javascriptreact]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
     "[python]": {
         "editor.defaultFormatter": "ms-python.python"
     }
