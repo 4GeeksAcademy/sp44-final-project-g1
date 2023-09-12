@@ -7,6 +7,11 @@ import { CombosPage, CoffesPage, TeasPage, BakeryPage, BagelsPage, JuicesPage, T
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 
+	const products = store.products.products
+
+	console.log(products)
+	
+
 	return (
 		<div 
 			className="container" 
