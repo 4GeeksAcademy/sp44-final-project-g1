@@ -16,7 +16,7 @@ class User(db.Model):
         return {
             "id": self.id,
             "id_user_ghop": self.id_user_ghop,
-            "fullname": self.username     
+            "fullname": self.fullname     
         }
 
 
@@ -28,17 +28,15 @@ class Customer(db.Model):
 
 
     def __repr__(self):
-        return f'<Customer {self.username}>'
+        return f'<Customer {self.user_name}>'
 
     def serialize(self):
         return {
             "id": self.id,
-            "username": self.username,
+            "username": self.user_name,
             "first_name": self.first_name,
             "last_name": self.last_name
         }
-
-
 
 
 class Product(db.Model):
@@ -56,7 +54,7 @@ class Product(db.Model):
             "id": self.id,
             "name": self.name,
             "pricing": self.pricing,
-            "category_id": self.category_id
+            "category_id": self.fk_category_id
         }
 
 
@@ -79,11 +77,12 @@ class Bill(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     fk_product_id = db.Column(db.Integer, db.ForeignKey('product.id'), unique=False, nullable=False)
-    fk_customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), unique=True, nullable=False)
+    fk_customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), unique=False, nullable=False)
+    product = db.relationship('Product')
     customer = db.relationship('Customer')
     
     quantity = db.Column(db.Integer, unique=False, nullable=False)
-    unit_price = db.Column(db.Integer, unique=False, nullable=False)
+    unit_price = db.Column(db.Float, unique=False, nullable=False)
     
     fk_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship('User')
@@ -96,9 +95,9 @@ class Bill(db.Model):
         return {
             "id": self.id,
             "created_at": self.created_at,
-            "product_id": self.product_id,
-            "customer_id": self.customer_id,
+            "product_id": self.fk_product_id,
+            "customer_id": self.fk_customer_id,
             "quantity": self.quantity,
             "unit_price": self.unit_price,
-            "user_id": self.user_id,
+            "user_id": self.fk_user_id,
         }
