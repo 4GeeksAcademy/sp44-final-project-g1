@@ -5,7 +5,7 @@ import { BackendURL } from "./component/backendURL";
 import injectContext, { Context } from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
-import { CoffesPage, CombosPage, TeasPage, BagelsPage, Home, BakeryPage, JuicesPage, ToastsPage } from "./pages";
+import { CoffesPage, TeasPage, BagelsPage, Home, BakeryPage, JuicesPage, ToastsPage } from "./pages";
 import { Login } from "./auth/Login.jsx";
 import { Cesta } from "./component/Cesta.jsx";
 
@@ -33,7 +33,6 @@ const Layout = () => {
                     <Route element={<Cesta />} path="/cesta" />
                     <Route element={<Login />} path="/login" />
                     <Route element={<Home />} path="/" />
-                    <Route element={<CombosPage />} path="/combos" />
                     <Route element={<CoffesPage />} path="/coffes" />
                     <Route element={<TeasPage />} path="/teas" />
                     <Route element={<BakeryPage />} path="/bakery" />

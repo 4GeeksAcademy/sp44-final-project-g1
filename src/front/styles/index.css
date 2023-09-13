@@ -9,6 +9,11 @@ body {
     font-family: 'Clear Sans', sans-serif;
  }
 
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: #FF7700; /* Cambia el color de fondo a naranja */
+}
+
 
 
                 
