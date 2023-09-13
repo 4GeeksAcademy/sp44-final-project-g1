@@ -8,6 +8,7 @@ import { Navbar } from "./component/navbar";
 import { CoffesPage, TeasPage, BagelsPage, Home, BakeryPage, JuicesPage, ToastsPage } from "./pages";
 import { Login } from "./auth/Login.jsx";
 import { Cesta } from "./component/Cesta.jsx";
+import { CestaCopy } from "./component/CestaCopy.jsx";
 
 // import { Footer } from "./component/footer";
 
@@ -27,20 +28,30 @@ const Layout = () => {
             <BrowserRouter basename={basename}>
 
                 {/* { store.user ?  <Navbar /> : ''} */}
-                <Navbar />
 
-                <Routes>
-                    <Route element={<Cesta />} path="/cesta" />
-                    <Route element={<Login />} path="/login" />
-                    <Route element={<Home />} path="/" />
-                    <Route element={<CoffesPage />} path="/coffes" />
-                    <Route element={<TeasPage />} path="/teas" />
-                    <Route element={<BakeryPage />} path="/bakery" />
-                    <Route element={<BagelsPage />} path="/bagels" />
-                    <Route element={<JuicesPage />} path="/juices" />
-                    <Route element={<ToastsPage />} path="/toasts" />
-                    <Route element={<Navigate to={"/"} />} path="/*" />
-                </Routes>
+                <div className="d-flex justify-content-between">
+                    <div className="col-7">
+
+                        <Navbar />
+                        <Routes>
+                            <Route element={<Cesta />} path="/cesta" />
+                            <Route element={<Login />} path="/login" />
+                            <Route element={<Home />} path="/" />
+                            <Route element={<CoffesPage />} path="/coffes" />
+                            <Route element={<TeasPage />} path="/teas" />
+                            <Route element={<BakeryPage />} path="/bakery" />
+                            <Route element={<BagelsPage />} path="/bagels" />
+                            <Route element={<JuicesPage />} path="/juices" />
+                            <Route element={<ToastsPage />} path="/toasts" />
+                            <Route element={<Navigate to={"/"} />} path="/*" />
+                        </Routes>
+                    </div>
+
+                    <div className="col-5"> <CestaCopy /> </div>
+
+                </div>
+
+
 
                 {/* <Footer /> */}
 

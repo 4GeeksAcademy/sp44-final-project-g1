@@ -16,7 +16,7 @@ export const JuicesPage = () => {
 		<div className="container-fluid" style={{ background: `url(${bgImg})`, backgroundSize: 'cover', backgroundAttachment: 'fixed' }}>
 			<div className="container">
 				<h3 className="container text-white mt-2">Juices</h3>
-				<div className="row row-cols-1 row-cols-md-3 row-cols-xl-5 g-3">
+				<div className="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3">
 					{products_category.map((product) => {
 						return (
 
