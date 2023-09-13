@@ -5,8 +5,22 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from flask_sqlalchemy import SQLAlchemy
 from api.models import db, User, Product, Customer, Category, Bill
 from api.utils import generate_sitemap, APIException
+import os
+import requests
 
 api = Blueprint('api', __name__)
+
+
+@api.route('/products-ghop', methods=['GET', 'POST'])
+def handle_products_ghop():
+    url = f'{os.getenv("BACKEND_URL_GHOP")}/products/families'
+    payload = {}
+    headers = {'X-Api-Key': os.getenv("API_KEY_GHOP")}
+
+    response = requests.request("GET", url, headers=headers, data=payload)
+
+    print(response.text)
+    return {'response': response.text}
 
 
 @api.route('/users', methods=['GET', 'POST'])
