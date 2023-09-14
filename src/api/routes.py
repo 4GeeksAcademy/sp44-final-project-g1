@@ -7,13 +7,56 @@ from api.models import db, User, Product, Customer, Category, Bill
 from api.utils import generate_sitemap, APIException
 import os
 import requests
+import json
 
 api = Blueprint('api', __name__)
 
+@api.route('/purchase-carts-ghop', methods=['GET'])
+def handle_purchase_carts_ghop():
+    customerQr= 'bj2bgk3l'
+    deleted= 'false'
+    url = f'{os.getenv("BACKEND_URL_GHOP")}purchase-carts?customerQr={customerQr}&deleted={deleted}'
+    payload = {}
+    headers = {'X-Api-Key': os.getenv("API_KEY_GHOP"), 
+               'X-Language': 'es-ES'}
 
-@api.route('/products-ghop', methods=['GET', 'POST'])
+    response = requests.request("GET", url, headers=headers, data=payload)
+
+    print(response.text)
+    return {'response': response.text}
+
+
+@api.route('/products-idcarts-products', methods=['POST'])
+def handle_products_id_carts_products():
+    carts_id = 5007  # Data que recibimos del front
+    products_id = 12  # Data que recibimos del front (debe ser uno de los que podemos vender)
+    quantity = 5  # Data que recibimos del front
+    url = f'{os.getenv("BACKEND_URL_GHOP")}/purchase-carts/{carts_id}/products'
+    payload = json.dumps([{"id": products_id,
+                           "delta": quantity}])
+    headers = {'Content-Type': 'application/json',
+               'X-Api-Key': os.getenv("API_KEY_GHOP")}
+    response = requests.request("POST", url, headers=headers, data=payload)
+    print(response.text)
+    return {'response': response.text}
+
+
+@api.route('/products-ghop', methods=['GET'])
 def handle_products_ghop():
-    url = f'{os.getenv("BACKEND_URL_GHOP")}/products/families'
+    url = f'{os.getenv("BACKEND_URL_GHOP")}products'
+    payload = {}
+    headers = {'X-Api-Key': os.getenv("API_KEY_GHOP"), 
+               'X-Language': 'es-ES'}
+
+    response = requests.request("GET", url, headers=headers, data=payload)
+
+    print(response.text)
+    return {'response': response.text}
+
+
+@api.route('/products-family-ghop', methods=['GET'])
+def handle_products_ghop():
+    url = f'{os.getenv("BACKEND_URL_GHOP")}products/families'
     payload = {}
     headers = {'X-Api-Key': os.getenv("API_KEY_GHOP")}
 
@@ -23,6 +66,40 @@ def handle_products_ghop():
     return {'response': response.text}
 
 
+
+@api.route('/customers-ghop', methods=['GET'])
+def handle_customers_ghop():
+    url = f'{os.getenv("BACKEND_URL_GHOP")}products/families'
+    payload = {}
+    headers = {'X-Api-Key': os.getenv("API_KEY_GHOP")}
+
+    response = requests.request("GET", url, headers=headers, data=payload)
+
+    print(response.text)
+    return {'response': response.text}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"""
+Esto es lo definido previo
+"""
 @api.route('/users', methods=['GET', 'POST'])
 def handle_users():
 
