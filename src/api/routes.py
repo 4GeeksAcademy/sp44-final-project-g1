@@ -11,6 +11,36 @@ import json
 
 api = Blueprint('api', __name__)
 
+"""
+1. Login del vendedor, aún no lo podemos hacer
+    1.1 Envío el QR del vendedor a ghop para validarlo (ese endpoint no lo tenemos aún)
+    1.2 Si el vendedor no existe en nuestra base de datos, lo creo (esto no se puede hacer aún porque no tenemos endpoint)
+    1.3 Hay que leer productos y categorias
+        1.3.1 Verificar que las categorias existen y si hay una nueva, se crea en nuestra base de datos (db), igual para productos
+        1.3.2 Verificar si hay algún producto o categoria que se borró y actualizar la db
+        1.3.3 Actualizar precios en productos si los hay
+    1.4 Devolverlos al front las categorias y productos actualizados []
+
+2. Llega el cliente
+    2.1 Tengo que crear el carrito (/purchase-carts-ghop)
+        2.1.1 Recibo del front el QR (en un json)
+        2.1.2 Hay que mandar endpoint con el QR del cliente(endpoint de customer)
+    2.2 Recibimos el nombre del cliente y el id de ghop y verificamos si ese cliente está en la base. Si no esta lo creamos. Guardamos el id del customer y lo devolvemos al front
+    2.3 Devolvemos al front el carrito
+        2.3.1 Devolvemos el id del carrito
+        2.3.2 Devolvemos en un [] los productos que ha comprado previamente, el [] puedes estar vacio si aún no compró nada
+
+3. Cierre del carrito en el front:
+    3.1 Recibo el Id del carrito, el Id del cliente y un [] la cantidad de los productos comprados
+    3.2 Tengo que armar los header y payloads, para hacer el fetch en purchase-carts, el numero del carrito/products
+    3.3 Recibo confirmación de Ghop
+    3.4 Grabo en nuestras bases los bills
+    3.5 Mando al front el resultado de lo que se ha hecho
+
+4.  
+
+"""
+
 @api.route('/purchase-carts-ghop', methods=['GET'])
 def handle_purchase_carts_ghop():
     customerQr= 'bj2bgk3l'
@@ -26,9 +56,44 @@ def handle_purchase_carts_ghop():
     return {'response': response.text}
 
 
+@api.route('/purchase-carts-ghop', methods=['POST'])
+def handle_purchase_carts_ghop2():
+    request_body = request.get_json()
+
+    customerQr = request_body["customerQr"]
+    deleted= 'false'
+
+    url = f'{os.getenv("BACKEND_URL_GHOP")}purchase-carts?customerQr={customerQr}&deleted={deleted}'
+    print(url)
+    payload = {}
+    headers = {'X-Api-Key': os.getenv("API_KEY_GHOP"), 
+               'X-Language': 'es-ES'}
+
+    response = requests.request("GET", url, headers=headers, data=payload)
+    print(response.text)
+
+    
+    request_body = json.dumps(response.text)
+    # customer_name_id = Customer.query.filter_by(id=request_body["customer"]['id'] ).first()
+
+    # if not customer_name_id:
+    #     customer = Customer(
+    #     name=request_body["customer"]['name'],
+    #     id=request_body["customer"]['id'],
+    #     )
+
+    #     db.session.add(customer)
+    #     db.session.commit()
+    
+    # request_body["customer"]['id'] = customer_name_id['id']
+    print(request_body[0])
+    return {'response': request_body}
+
+
 @api.route('/products-idcarts-products', methods=['POST'])
 def handle_products_id_carts_products():
-    carts_id = 5007  # Data que recibimos del front
+    carts_id = request # Data que recibimos del front
+    user_id =
     products_id = 12  # Data que recibimos del front (debe ser uno de los que podemos vender)
     quantity = 5  # Data que recibimos del front
     url = f'{os.getenv("BACKEND_URL_GHOP")}/purchase-carts/{carts_id}/products'
@@ -55,7 +120,7 @@ def handle_products_ghop():
 
 
 @api.route('/products-family-ghop', methods=['GET'])
-def handle_products_ghop():
+def handle_products_family_ghop():
     url = f'{os.getenv("BACKEND_URL_GHOP")}products/families'
     payload = {}
     headers = {'X-Api-Key': os.getenv("API_KEY_GHOP")}
@@ -69,7 +134,7 @@ def handle_products_ghop():
 
 @api.route('/customers-ghop', methods=['GET'])
 def handle_customers_ghop():
-    url = f'{os.getenv("BACKEND_URL_GHOP")}products/families'
+    url = f'{os.getenv("BACKEND_URL_GHOP")}customers'
     payload = {}
     headers = {'X-Api-Key': os.getenv("API_KEY_GHOP")}
 
