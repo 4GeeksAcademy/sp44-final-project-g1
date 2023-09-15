@@ -70,30 +70,36 @@ def handle_purchase_carts_ghop2():
                'X-Language': 'es-ES'}
 
     response = requests.request("GET", url, headers=headers, data=payload)
-    print(response.text)
 
     
-    request_body = json.dumps(response.text)
-    # customer_name_id = Customer.query.filter_by(id=request_body["customer"]['id'] ).first()
+    carts = json.loads(response.text)
+    print(carts[0]["id"])  # Id del carrito
+    print(carts[0]["customer"])  # diccionario que contiene los datos del cliente
+    print(carts[0]["customer"]["name"])  # nombre del cliente
+
+    print(carts[0]["products"])  # lista (array) que contiene los datos los productos comprados previamente
+    print(carts[0]["products"][0])  # diccionario que contiene los datos del primer producto comprado
+    print(carts[0]["products"][0]["name"])  # nombre del primer producto comprado
+    print(carts[0]["products"][1]["name"])  # nombre del segundo producto comprado
+
+    # Hay q definir un customer_id_ghop en el modelo Customer
+    # customer_name_id = Customer.query.filter_by(customer_id_ghop = carts[0]["customer"]["id"]).first()
 
     # if not customer_name_id:
-    #     customer = Customer(
-    #     name=request_body["customer"]['name'],
-    #     id=request_body["customer"]['id'],
-    #     )
+    #     customer = Customer(user_name = carts[0]["customer"]["name"],
+    #                         customer_id_ghop = carts[0]["customer"]["id"])
 
     #     db.session.add(customer)
     #     db.session.commit()
     
-    # request_body["customer"]['id'] = customer_name_id['id']
-    print(request_body[0])
-    return {'response': request_body}
+    # carts[0]["customer"]['id'] = customer_name_id['id']
+    return {'response': carts}
 
 
 @api.route('/products-idcarts-products', methods=['POST'])
 def handle_products_id_carts_products():
     carts_id = request # Data que recibimos del front
-    user_id =
+    # user_id =
     products_id = 12  # Data que recibimos del front (debe ser uno de los que podemos vender)
     quantity = 5  # Data que recibimos del front
     url = f'{os.getenv("BACKEND_URL_GHOP")}/purchase-carts/{carts_id}/products'
