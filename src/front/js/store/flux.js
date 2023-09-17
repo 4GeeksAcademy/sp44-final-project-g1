@@ -3,6 +3,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			user: false,
 			products: [],
+			categories: [],
+			products_ghop: [],
 			message: null,
 			demo: [
 				{
@@ -48,6 +50,65 @@ const getState = ({ getStore, getActions, setStore }) => {
 						//2.1 Actualiza el estado del almacenamiento local y el estado de la aplicación
 						localStorage.setItem('products', JSON.stringify(data.products));
 						setStore({ products: data.products }); // Actualiza el estado de la aplicación
+					} else {
+						console.log('Error: ', response.status, response.statusText);
+					}
+				} catch (error) {
+					console.error('Error: ', error);
+				}
+			},
+
+			getCategories: async () => {
+				// 1. Definir options
+				const requestsOpts = {
+					method: "GET",
+					//1.1 Indicar que se espera una respuesta en formato JSON y que los datos enviados también estarán en formato JSON
+					headers: {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json'
+					},
+				};
+
+				try {
+					// 2. realiza la solicitud a la API
+					const response = await fetch(process.env.BACKEND_URL + "/api/category", requestsOpts);
+
+					if (response.ok) {
+						const data = await response.json();
+
+						//2.1 Actualiza el estado del almacenamiento local y el estado de la aplicación
+						localStorage.setItem('categories', JSON.stringify(data.categories));
+						setStore({ categories: data.categories }); // Actualiza el estado de la aplicación
+					} else {
+						console.log('Error: ', response.status, response.statusText);
+					}
+				} catch (error) {
+					console.error('Error: ', error);
+				}
+			},
+
+			getProductsGhop: async () => {
+				// 1. Definir options
+				const requestsOpts = {
+					method: "GET",
+					//1.1 Indicar que se espera una respuesta en formato JSON y que los datos enviados también estarán en formato JSON
+					headers: {
+						'X-Api-Key': process.env.API_KEY_GHOP,
+						// 'Accept': 'application/json',
+						// 'Content-Type': 'application/json'
+					},
+				};
+
+				try {
+					// 2. realiza la solicitud a la API
+					const response = await fetch(process.env.BACKEND_URL_GHOP + "/products", requestsOpts);
+
+					if (response.ok) {
+						const data = await response.text();
+
+						//2.1 Actualiza el estado del almacenamiento local y el estado de la aplicación
+						// localStorage.setItem('products_ghop', JSON.stringify(data));
+						setStore({ products_ghop: data }); // Actualiza el estado de la aplicación
 					} else {
 						console.log('Error: ', response.status, response.statusText);
 					}

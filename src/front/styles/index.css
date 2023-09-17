@@ -1,22 +1,89 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
-
-
-
 body {
-    background: #121F28;
-    font-family: 'Clear Sans', sans-serif;
- }
-
-.dropdown-item:hover,
-.dropdown-item:focus {
-  background-color: #FF7700; /* Cambia el color de fondo a naranja */
+  background: #121F28;
+  font-family: 'Clear Sans', sans-serif;
 }
 
+header {
+  background: #0A1216;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+}
 
+.navbar {
+  position: fixed;
+  margin-top: 60px;
+  z-index: 99;
+  background: #121F28;
+}
 
-                
-  
+.logo-ghop {
+  width: 130px;
+  height: auto;
+}
 
+.btn-outline-info {
+  border-color: #3BB8B8;
+}
 
+.custom-nav-link {
+  color: #FF7700;
+  border-color: #FF7700;
+  background-color: transparent;
+  width: 100px;
+  /* Otros estilos personalizados aquí */
+}
+
+.custom-nav-link:hover {
+  background-color: #FF7700;
+}
+
+.btn-onlogout {
+  background: #FF7700;
+  border: #FF7700;
+  color: white;
+}
+
+.btn-onclose {
+  background: #121F28;
+  border: #121F28;
+  color: white;
+}
+
+.half-card-img {
+  width: 100%;
+  max-height: 200px;
+  overflow: hidden;
+  /* max-height: 50%; */
+}
+
+.card-body {
+  background: #0B1318; 
+  border: #0B1318;
+}
+
+.card-text {
+  color: #FF7700;
+}
+
+.btn-block {
+  background-color: #3BB8B8;
+  width: 80%;
+}
+
+.cesta {
+  background: #121F28;
+  margin-top: 60px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content:flex-start;
+  padding: 10px;
+  color: white;
+  position: fixed;
+}
+
+.btn-cesta {
+  background: #FF7701;
+  width: 100%;
+}
