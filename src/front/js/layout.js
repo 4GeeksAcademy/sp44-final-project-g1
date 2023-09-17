@@ -4,10 +4,11 @@ import { BackendURL } from "./component/backendURL";
 
 import injectContext, { Context } from "./store/appContext";
 
-import { Navbar } from "./component/navbar";
+import { Navbar } from "./component/navbar.jsx";
 import { CoffesPage, TeasPage, BagelsPage, Home, BakeryPage, JuicesPage, ToastsPage } from "./pages";
 import { Login } from "./auth/Login.jsx";
 import { Cesta } from "./component/Cesta.jsx";
+import { BlockScreen } from "./component/BlockScreen.jsx";
 
 // import { Footer } from "./component/footer";
 
@@ -31,6 +32,7 @@ const Layout = () => {
 
                 <Routes>
                     <Route element={<Cesta />} path="/cesta" />
+                    <Route element={<BlockScreen />} path="/blockscreen" />
                     <Route element={<Login />} path="/login" />
                     <Route element={<Home />} path="/" />
                     <Route element={<CoffesPage />} path="/coffes" />
