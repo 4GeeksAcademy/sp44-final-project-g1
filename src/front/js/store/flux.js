@@ -1,10 +1,12 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			user: false,
+			// token: null,
+			user: null,
 			products: [],
 			categories: [],
 			products_ghop: [],
+			selectProduct: [],
 			message: null,
 			demo: [
 				{
@@ -25,7 +27,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 
-			Login: () => {
+			// login: async () => {
+			// 	const options = {
+			// 		method: 'POST',
+			// 		header: {
+			// 			'Accept': 'application/json',
+			// 			'Content-Type': 'application/json'
+			// 		},
+			// 		body: JSON.stringify({"id_user_ghop": idUserGhop})
+			// 		}
+			// },
+
+			selectProduct: (product) => {
+				const { selectProduct } = getStore();
+				const productIndex = selectProduct.findIndex((p) => p.name === product.name);
+			
+				if (productIndex === -1) {
+				  // Si el producto no está en la lista, agrégalo
+				  setStore({ selectProduct: [...selectProduct, product] });
+				} else {
+				  alert('The product is already in the purchase cart')
+				}
+			  },
+
+			login: () => {
 				setStore({ user: true })
 			},
 
@@ -115,42 +140,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.error('Error: ', error);
 				}
-			},
-
-			// getMessage: async () => {
-			// 	try {
-
-			// 		const requestOptions = {
-			// 			method: "GET",
-			// 			headers: {
-			// 				'Accept': 'application/json',
-			// 			}
-			// 		};
-
-			// 		// fetching data from the backend
-			// 		const resp = await fetch(process.env.BACKEND_URL + "/api/hello", requestOptions)
-			// 		const data = await resp.json()
-			// 		setStore({ message: data.message })
-			// 		// don't forget to return something, that is how the async resolves
-			// 		return data;
-			// 	} catch (error) {
-			// 		console.log("Error loading message from backend", error)
-			// 	}
-			// },
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
-			}
+			},			
 		}
 	};
 };

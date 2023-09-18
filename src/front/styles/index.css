@@ -71,19 +71,35 @@ header {
   width: 80%;
 }
 
-.cesta {
+.fixed-cesta {
   background: #121F28;
   margin-top: 60px;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content:flex-start;
   padding: 10px;
   color: white;
   position: fixed;
+  overflow-y: scroll;
+  height: 100%;
 }
 
 .btn-cesta {
   background: #FF7701;
   width: 100%;
+  margin-bottom: 60px
+}
+
+.gif-container {
+  width: 100vw; /* 100% del ancho de la ventana */
+  height: 100vh; /* 100% de la altura de la ventana */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gif {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

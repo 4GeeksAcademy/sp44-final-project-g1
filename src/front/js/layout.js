@@ -9,6 +9,7 @@ import { Products } from "./pages/Products.jsx";
 import { Login } from "./auth/Login.jsx";
 import { Cesta } from "./component/Cesta.jsx";
 import { Header } from "./component/Header.jsx";
+import { BlockScreen } from "./component/BlockScreen.jsx";
 
 
 
@@ -37,6 +38,7 @@ const Layout = () => {
                         
                         <Routes>   
                             <Route element={<Login />} path="/login" />
+                            <Route element={<BlockScreen />} path="/blockscreen" />
                             <Route element={<Products />} path="/products" />
                             <Route element={<Products />} path="/products/:id" />                            
                             <Route element={<Navigate to={"/products"} />} path="/*" />                            

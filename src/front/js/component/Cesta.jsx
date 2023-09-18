@@ -1,29 +1,40 @@
-import React, { useContext } from "react";
-import { CardCesta } from "../pages/Cards/CardCesta.jsx";
+import React, { useContext, useState } from "react";
+import { CardCesta, CardProduct } from "../pages/Cards";
 import { Context } from "../store/appContext.js";
 
+
 export const Cesta = () => {
-    const { store, actions } = useContext(Context);
-    const products = store.products;
-    // console.log(products);
+
+    const {store, actions} = useContext(Context);
+
+    const selectProduct = store.selectProduct;
+    console.log(selectProduct);
+
+    const total = selectProduct.reduce((accumulator, product) => {
+        return accumulator + product.pricing;
+    }, 0);
 
     return (
-        <div className="container cesta col-4">
+        <div className="container col-4 fixed-cesta">
 
             <div>
                 <h3 style={{ color: '#3BB9B8', margin: '0' }}>Purchase cart</h3>
                 <p> Customer: </p>
             </div>
 
-            <div>
+            <div className="scrollable-content">
                 <p>Productos de la lista previa</p>
-                <CardCesta />
-                
+
+                {
+                    selectProduct.map((product, id) => (
+                        <CardCesta key={id} {...product} />
+                    ))
+                }
             </div>
 
             <div className="row">
                 <p className="col-10">Total</p>
-                <p className="col-2"> 1000 €</p>
+                <p className="col-2"> {total} €</p>
             </div>
 
             <div>
@@ -33,7 +44,5 @@ export const Cesta = () => {
             </div>
 
         </div>
-
-
     );
 }
