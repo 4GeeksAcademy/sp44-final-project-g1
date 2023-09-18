@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 41aa1e14899b
+Revision ID: 2da1ac54f9a2
 Revises: 
-Create Date: 2023-09-04 19:45:09.085634
+Create Date: 2023-09-18 15:50:00.345102
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '41aa1e14899b'
+revision = '2da1ac54f9a2'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -26,10 +26,10 @@ def upgrade():
     )
     op.create_table('customer',
     sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('customer_user_ghop', sa.Integer(), nullable=False),
     sa.Column('user_name', sa.String(length=200), nullable=False),
-    sa.Column('first_name', sa.String(length=50), nullable=False),
-    sa.Column('last_name', sa.String(length=50), nullable=False),
     sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('customer_user_ghop'),
     sa.UniqueConstraint('user_name')
     )
     op.create_table('user',
@@ -37,7 +37,8 @@ def upgrade():
     sa.Column('id_user_ghop', sa.Integer(), nullable=False),
     sa.Column('fullname', sa.String(length=200), nullable=False),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('fullname')
+    sa.UniqueConstraint('fullname'),
+    sa.UniqueConstraint('id_user_ghop')
     )
     op.create_table('product',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -54,13 +55,12 @@ def upgrade():
     sa.Column('fk_product_id', sa.Integer(), nullable=False),
     sa.Column('fk_customer_id', sa.Integer(), nullable=False),
     sa.Column('quantity', sa.Integer(), nullable=False),
-    sa.Column('unit_price', sa.Integer(), nullable=False),
+    sa.Column('unit_price', sa.Float(), nullable=False),
     sa.Column('fk_user_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['fk_customer_id'], ['customer.id'], ),
     sa.ForeignKeyConstraint(['fk_product_id'], ['product.id'], ),
     sa.ForeignKeyConstraint(['fk_user_id'], ['user.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('fk_customer_id')
+    sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
 

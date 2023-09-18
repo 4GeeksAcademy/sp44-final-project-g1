@@ -64,36 +64,35 @@ def handle_purchase_carts_ghop2():
     deleted= 'false'
 
     url = f'{os.getenv("BACKEND_URL_GHOP")}purchase-carts?customerQr={customerQr}&deleted={deleted}'
-    print(url)
+    # print(url)
     payload = {}
     headers = {'X-Api-Key': os.getenv("API_KEY_GHOP"), 
                'X-Language': 'es-ES'}
 
     response = requests.request("GET", url, headers=headers, data=payload)
-    print(response.text)
+    # print(response.text)
 
     
-    request_body = json.dumps(response.text)
-    # customer_name_id = Customer.query.filter_by(id=request_body["customer"]['id'] ).first()
+    response_body = json.loads(response.text)
+    customer = Customer.query.filter_by(customer_user_ghop=response_body[0]["customer"]["id"]).first()
 
-    # if not customer_name_id:
-    #     customer = Customer(
-    #     name=request_body["customer"]['name'],
-    #     id=request_body["customer"]['id'],
-    #     )
+    if not customer:
+        customer = Customer(user_name=response_body[0]["customer"]["name"],
+                            customer_user_ghop=response_body[0]["customer"]["id"],)
 
-    #     db.session.add(customer)
-    #     db.session.commit()
+        db.session.add(customer)
+        db.session.commit()
+
     
-    # request_body["customer"]['id'] = customer_name_id['id']
-    print(request_body[0])
-    return {'response': request_body}
+    response_body[0]["customer"]["id"] = customer.id
+    # print(response_body[0])
+    return {'response': response_body}
 
 
 @api.route('/products-idcarts-products', methods=['POST'])
 def handle_products_id_carts_products():
     carts_id = request # Data que recibimos del front
-    user_id =
+    # user_id =
     products_id = 12  # Data que recibimos del front (debe ser uno de los que podemos vender)
     quantity = 5  # Data que recibimos del front
     url = f'{os.getenv("BACKEND_URL_GHOP")}/purchase-carts/{carts_id}/products'

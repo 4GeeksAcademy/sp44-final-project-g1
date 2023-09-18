@@ -6,7 +6,7 @@ db = SQLAlchemy()
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # A definir si es el QR
-    id_user_ghop = db.Column(db.Integer, unique=False, nullable=False)
+    id_user_ghop = db.Column(db.Integer, unique=True, nullable=False)
     fullname = db.Column(db.String(200), unique=True, nullable=False)
 
     def __repr__(self):
@@ -22,9 +22,10 @@ class User(db.Model):
 
 class Customer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    customer_user_ghop = db.Column(db.Integer, unique=True, nullable=False)
     user_name = db.Column(db.String(200), unique=True, nullable=False)
-    first_name = db.Column(db.String(50), unique=False, nullable=False)
-    last_name = db.Column(db.String(50), unique=False, nullable=False)
+    # first_name = db.Column(db.String(50), unique=False, nullable=False)
+    # last_name = db.Column(db.String(50), unique=False, nullable=False)
 
 
     def __repr__(self):
@@ -34,8 +35,9 @@ class Customer(db.Model):
         return {
             "id": self.id,
             "username": self.user_name,
-            "first_name": self.first_name,
-            "last_name": self.last_name
+            "customerGhopId": self.customer_user_ghop,
+            # "first_name": self.first_name,
+            # "last_name": self.last_name
         }
 
 
