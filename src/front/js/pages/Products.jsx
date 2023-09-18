@@ -8,8 +8,7 @@ import { CardProduct } from "./Cards";
 export const Products = () => {
 
 	const { store, actions } = useContext(Context);
-
-	// const category = store.category
+	
 	const params = useParams();
 	const categoryId = params.id;
 	console.log(params);
@@ -18,7 +17,7 @@ export const Products = () => {
 	const productsCategory = categoryId
 		? store.products.filter((item) => item.category_id == categoryId) : store.products
 
-	console.log(productsCategory);
+	// console.log(productsCategory);
 
 	return (
 		<div className="container-fluid" style={{ background: `url(${bgImg})`, backgroundSize: 'cover', backgroundAttachment: 'fixed', marginTop: '150px' }}>

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 
@@ -30,7 +30,6 @@ export const Navbar = () => {
 							<NavLink key={category.id}
 								className="custom-nav-link btn btn-lg btn-outline me-1"
 								to={"/products/" + category.id}
-								// onClick={() => handleCategoryClick(category.id)}
 							>
 								{category.name}
 							</NavLink>
@@ -38,56 +37,6 @@ export const Navbar = () => {
 
 						)
 					})}
-
-					{/* <NavLink
-						className="nav-item nav-link btn btn-lg btn-outline-secondary  me-1"
-						style={{ color: '#FF7700', borderColor: '#FF7700', backgroundColor: 'transparent', width: '100px' }}
-						to="/combos"
-					>
-						All
-					</NavLink>
-					<NavLink
-						className="nav-item nav-link btn btn-lg btn-outline-secondary me-1"
-						style={{ color: '#FF7700', borderColor: '#FF7700', backgroundColor: 'transparent', width: '100px' }}
-						to="/coffes"
-					>
-						Coffes
-					</NavLink>
-					<NavLink
-						className="nav-item nav-link btn btn-lg btn-outline-secondary me-1"
-						style={{ color: '#FF7700', borderColor: '#FF7700', backgroundColor: 'transparent', width: '100px' }}
-						to="/teas"
-					>
-						Teas
-					</NavLink>
-					<NavLink
-						className="nav-item nav-link btn btn-lg btn-outline-secondary me-1 "
-						style={{ color: '#FF7700', borderColor: '#FF7700', backgroundColor: 'transparent', width: '100px' }}
-						to="/bakery"
-					>
-						Bakery
-					</NavLink>
-					<NavLink
-						className="nav-item nav-link btn btn-lg btn-outline-secondary me-1"
-						style={{ color: '#FF7700', borderColor: '#FF7700', backgroundColor: 'transparent', width: '100px' }}
-						to="/bagels"
-					>
-						Bagels
-					</NavLink>
-					<NavLink
-						className="nav-item nav-link btn btn-lg btn-outline-secondary me-1"
-						style={{ color: '#FF7700', borderColor: '#FF7700', backgroundColor: 'transparent', width: '100px' }}
-						to="/juices"
-					>
-						Juices
-					</NavLink>
-					<NavLink
-						className="nav-item nav-link btn btn-lg btn-outline-secondary"
-						style={{ color: '#FF7700', borderColor: '#FF7700', backgroundColor: 'transparent', width: '100px' }}
-						to="/toasts"
-					>
-						Toasts
-					</NavLink> */}
 				</nav>
 			</div>
 		</div>
