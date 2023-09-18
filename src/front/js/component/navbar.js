@@ -1,100 +1,93 @@
-import React from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
-import logoGhop from "../../img/LogoGhop.png"
+import React, { useContext } from "react";
+import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 
 export const Navbar = () => {
 
-	const navegate = useNavigate();
+	const { store, actions } = useContext(Context)
 
-	const onLogout = () => {
-		navegate("/login", { replace: true })
-	}
-
+	const categories = store.categories
+	// const id = useParams()
+	// console.log(id)
+	console.log(categories)
 
 	return (
-		<div className="container-fluid">
-			<header>
-				<div
-					className="row flex-nowrap justify-content-between align-items-center"
-					style={{ background: '#0A1216' }}
-				>
-					<div className="col-4 pt-1">
-						<Link to="/">
-							<img
-								src={logoGhop}
-								className="navbar-brand mx-2"
-								style={{ width: '130px', height: 'auto' }}
-								alt="Logo"
-							/>
-						</Link>
-					</div>
-					<div className="col-4 d-flex justify-content-end align-items-center">
-						<div className="btn-group">
-							<button type="button" className="btn btn-info me-md-2 rounded-pill btn-sm dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
-								<i className="fa-solid fa-user"></i>
-							</button>
-							<ul className="dropdown-menu dropdown-menu-lg-end" style={{ background: '#0E181D' }}>
-								<li className="dropdown-item text-white"><i className="fas fa-user-shield"></i> Block </li>
-								<li className="dropdown-item text-white" onClick={onLogout}><i className="far fa-circle-left"></i> Log out </li>
-								<li className="dropdown-item text-white"><i className="fa-solid fa-book-open"></i> History</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</header>
+		<div className="navbar container-fluid col-8">
 
 			<div className=" container nav-scroller py-1 border-bottom mt-0">
-				<nav className="nav justify-content-start">
+				<nav className="d-grid gap-7 d-md-flex justify-content-md-center" >
+
 					<NavLink
-						className="nav-item nav-link btn btn-outline-secondary me-1"
-						style={{ color: '#FF7700', borderColor: '#FF7700', backgroundColor: 'transparent'}}
+						className="custom-nav-link btn btn-lg btn-outline  me-1"
+						to={"/"}
+					>
+						All
+					</NavLink>
+
+					{categories.map((category) => {
+						return (
+							<NavLink key={category.id}
+								className="custom-nav-link btn btn-lg btn-outline me-1"
+								to={"/products/" + category.id}
+								// onClick={() => handleCategoryClick(category.id)}
+							>
+								{category.name}
+							</NavLink>
+
+
+						)
+					})}
+
+					{/* <NavLink
+						className="nav-item nav-link btn btn-lg btn-outline-secondary  me-1"
+						style={{ color: '#FF7700', borderColor: '#FF7700', backgroundColor: 'transparent', width: '100px' }}
 						to="/combos"
 					>
 						All
 					</NavLink>
 					<NavLink
-						className="nav-item nav-link btn btn-outline-secondary me-1"
-						style={{ color: '#FF7700', borderColor: '#FF7700', backgroundColor: 'transparent'}}
+						className="nav-item nav-link btn btn-lg btn-outline-secondary me-1"
+						style={{ color: '#FF7700', borderColor: '#FF7700', backgroundColor: 'transparent', width: '100px' }}
 						to="/coffes"
 					>
 						Coffes
 					</NavLink>
 					<NavLink
-						className="nav-item nav-link btn btn-outline-secondary me-1"
-						style={{ color: '#FF7700', borderColor: '#FF7700', backgroundColor: 'transparent'}}
+						className="nav-item nav-link btn btn-lg btn-outline-secondary me-1"
+						style={{ color: '#FF7700', borderColor: '#FF7700', backgroundColor: 'transparent', width: '100px' }}
 						to="/teas"
 					>
 						Teas
 					</NavLink>
 					<NavLink
-						className="nav-item nav-link btn btn-outline-secondary me-1 "
-						style={{ color: '#FF7700', borderColor: '#FF7700', backgroundColor: 'transparent'}}
+						className="nav-item nav-link btn btn-lg btn-outline-secondary me-1 "
+						style={{ color: '#FF7700', borderColor: '#FF7700', backgroundColor: 'transparent', width: '100px' }}
 						to="/bakery"
 					>
 						Bakery
 					</NavLink>
 					<NavLink
-						className="nav-item nav-link btn btn-outline-secondary me-1"
-						style={{ color: '#FF7700', borderColor: '#FF7700', backgroundColor: 'transparent'}}
+						className="nav-item nav-link btn btn-lg btn-outline-secondary me-1"
+						style={{ color: '#FF7700', borderColor: '#FF7700', backgroundColor: 'transparent', width: '100px' }}
 						to="/bagels"
 					>
 						Bagels
 					</NavLink>
 					<NavLink
-						className="nav-item nav-link btn btn-outline-secondary me-1"
-						style={{ color: '#FF7700', borderColor: '#FF7700', backgroundColor: 'transparent'}}
+						className="nav-item nav-link btn btn-lg btn-outline-secondary me-1"
+						style={{ color: '#FF7700', borderColor: '#FF7700', backgroundColor: 'transparent', width: '100px' }}
 						to="/juices"
 					>
 						Juices
 					</NavLink>
 					<NavLink
-						className="nav-item nav-link btn btn-outline-secondary"
-						style={{ color: '#FF7700', borderColor: '#FF7700', backgroundColor: 'transparent'}}
+						className="nav-item nav-link btn btn-lg btn-outline-secondary"
+						style={{ color: '#FF7700', borderColor: '#FF7700', backgroundColor: 'transparent', width: '100px' }}
 						to="/toasts"
 					>
 						Toasts
-					</NavLink>
+					</NavLink> */}
 				</nav>
 			</div>
 		</div>

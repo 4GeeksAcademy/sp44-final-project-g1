@@ -5,11 +5,11 @@ import { BackendURL } from "./component/backendURL";
 import injectContext, { Context } from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
-import { CoffesPage, TeasPage, BagelsPage, Home, BakeryPage, JuicesPage, ToastsPage } from "./pages";
+import { Products } from "./pages/Products.jsx";
 import { Login } from "./auth/Login.jsx";
 import { Cesta } from "./component/Cesta.jsx";
+import { Header } from "./component/Header.jsx";
 
-// import { Footer } from "./component/footer";
 
 
 //create your first component
@@ -25,25 +25,29 @@ const Layout = () => {
     return (
         <div>
             <BrowserRouter basename={basename}>
-
                 {/* { store.user ?  <Navbar /> : ''} */}
-                <Navbar />
 
-                <Routes>
-                    <Route element={<Cesta />} path="/cesta" />
-                    <Route element={<Login />} path="/login" />
-                    <Route element={<Home />} path="/" />
-                    <Route element={<CoffesPage />} path="/coffes" />
-                    <Route element={<TeasPage />} path="/teas" />
-                    <Route element={<BakeryPage />} path="/bakery" />
-                    <Route element={<BagelsPage />} path="/bagels" />
-                    <Route element={<JuicesPage />} path="/juices" />
-                    <Route element={<ToastsPage />} path="/toasts" />
-                    <Route element={<Navigate to={"/"} />} path="/*" />
-                </Routes>
+                <Header />
 
+                <div className="d-flex justify-content-between">
+
+                    <div className="col-8">
+                       
+                        <Navbar />
+                        
+                        <Routes>   
+                            <Route element={<Login />} path="/login" />
+                            <Route element={<Products />} path="/products" />
+                            <Route element={<Products />} path="/products/:id" />                            
+                            <Route element={<Navigate to={"/products"} />} path="/*" />                            
+                        </Routes>
+
+                    </div>
+                    
+                    <div className="col-4"> <Cesta /> </div>
+                
+                </div>
                 {/* <Footer /> */}
-
             </BrowserRouter>
         </div>
     );
