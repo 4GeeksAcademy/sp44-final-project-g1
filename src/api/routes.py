@@ -40,32 +40,7 @@ api = Blueprint('api', __name__)
 4.  
 
 """
-@api.route('/open-store', methods=['POST'])
-def handle_open_store():
-    request_body = request.get_json()
-    vendor_qr = request_body["vendorQr"]
-    # TODO: Validar con endpoint de Ghop (aún no está el endpoint)
-    response_body = {}
 
-    # Traer las categorías y grabarla en nuestra base de datos e ir armando nuestro response_body
-    url = f'{os.getenv("BACKEND_URL_GHOP")}products/families'
-    payload = {}
-    headers = {'X-Api-Key': os.getenv("API_KEY_GHOP")}
-    response = requests.request("GET", url, headers=headers, data=payload)
-    categories = json.loads(response.text)
-    for item in categories:
-        category_name = Category.query.filter_by(name=item["name"]).first()
-        if not category_name:
-            # TODO: Agrego la categoria en mi base customer
-            pass
-    response_body["categories"] = categories
-
-    # TODO: Traer los productos y verificar en la base de datos
-
-    
-    print(response.text)
-    # Devuelvo todo mi response_body armado
-    return {'results': response_body}, 200
 
 
 @api.route('/purchase-carts-ghop', methods=['GET'])
@@ -97,27 +72,6 @@ def handle_products_id_carts_products():
     return {'response': response.text}
 
 
-@api.route('/products-ghop', methods=['GET'])
-def handle_products_ghop():
-    url = f'{os.getenv("BACKEND_URL_GHOP")}products'
-    payload = {}
-    headers = {'X-Api-Key': os.getenv("API_KEY_GHOP"), 
-               'X-Language': 'es-ES'}
-    response = requests.request("GET", url, headers=headers, data=payload)
-    print(response.text)
-    return {'response': response.text}
-
-
-@api.route('/products-family-ghop', methods=['GET'])
-def handle_products_family_ghop():
-    url = f'{os.getenv("BACKEND_URL_GHOP")}products/families'
-    payload = {}
-    headers = {'X-Api-Key': os.getenv("API_KEY_GHOP")}
-    response = requests.request("GET", url, headers=headers, data=payload)
-    print(response.text)
-    return {'response': response.text}
-
-
 @api.route('/customers-ghop', methods=['GET'])
 def handle_customers_ghop():
     url = f'{os.getenv("BACKEND_URL_GHOP")}customers'
@@ -128,10 +82,51 @@ def handle_customers_ghop():
     return {'response': response.text}
 
 
+# 1.Recibe el Qr del vendedor, verifica y actualiza categorias y productos (con sus precios) y devuelve categorias y productos
+@api.route('/open-store', methods=['POST'])
+def handle_open_store():
+    request_body = request.get_json()
+    vendor_qr = request_body["vendorQr"]
+    # TODO: Validar con endpoint de Ghop (aún no está el endpoint)
+    response_body = {}
+
+    # Traer las categorías y grabarla en nuestra base de datos e ir armando nuestro response_body
+    url = f'{os.getenv("BACKEND_URL_GHOP")}products/families'
+    payload = {}
+    headers = {'X-Api-Key': os.getenv("API_KEY_GHOP"),
+               'X-Language': 'es-ES'}
+    response = requests.request("GET", url, headers=headers, data=payload)
+    categories = json.loads(response.text)
+    for item in categories:
+        category_name = Category.query.filter_by(name=item["name"]).first()
+        if not category_name:
+            # TODO: Agrego la categoria en mi base customer
+            pass
+    response_body["categories"] = categories
+
+    # Traer los productos y verificar en la base de datos
+    url = f'{os.getenv("BACKEND_URL_GHOP")}products'
+    payload = {}
+    headers = {'X-Api-Key': os.getenv("API_KEY_GHOP"), 
+               'X-Language': 'es-ES'}
+    response = requests.request("GET", url, headers=headers, data=payload)
+    products = json.loads(response.text)
+    for item in products:
+        product_name = Product.query.filter_by(name=item["name"]).first()
+        if not product_name:
+            # TODO: Agrego la categoria en mi base customer
+            pass
+        else: 
+            # TODO: Cambiar el valor de los precios en todos los productos en nuestra base db
+            pass
+    response_body["products"] = products
+
+    print(response.text)
+    # Devuelvo todo mi response_body armado
+    return {'results': response_body}, 200
 
 
-
-# Esto es la creación de cart, recibiendo antes el códigoQr del cliente
+# 2. Recibe el Qr del cliente, devuelve el id del cart,el id y nombre del cliente y los productos comprados por el cliente (vacio si no compró nada)
 @api.route('/purchase-carts', methods=['POST'])
 def handle_purchase_carts():
     request_body = request.get_json()
