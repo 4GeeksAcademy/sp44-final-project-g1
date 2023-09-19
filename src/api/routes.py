@@ -40,6 +40,33 @@ api = Blueprint('api', __name__)
 4.  
 
 """
+@api.route('/open-store', methods=['POST'])
+def handle_open_store():
+    request_body = request.get_json()
+    vendor_qr = request_body["vendorQr"]
+    # TODO: Validar con endpoint de Ghop (aún no está el endpoint)
+    response_body = {}
+
+    # Traer las categorías y grabarla en nuestra base de datos e ir armando nuestro response_body
+    url = f'{os.getenv("BACKEND_URL_GHOP")}products/families'
+    payload = {}
+    headers = {'X-Api-Key': os.getenv("API_KEY_GHOP")}
+    response = requests.request("GET", url, headers=headers, data=payload)
+    categories = json.loads(response.text)
+    for item in categories:
+        category_name = Category.query.filter_by(name=item["name"]).first()
+        if not category_name:
+            # TODO: Agrego la categoria en mi base customer
+            pass
+    response_body["categories"] = categories
+
+    # TODO: Traer los productos y verificar en la base de datos
+
+    
+    print(response.text)
+    # Devuelvo todo mi response_body armado
+    return {'results': response_body}, 200
+
 
 @api.route('/purchase-carts-ghop', methods=['GET'])
 def handle_purchase_carts_ghop():
@@ -49,44 +76,9 @@ def handle_purchase_carts_ghop():
     payload = {}
     headers = {'X-Api-Key': os.getenv("API_KEY_GHOP"), 
                'X-Language': 'es-ES'}
-
     response = requests.request("GET", url, headers=headers, data=payload)
-
     print(response.text)
     return {'response': response.text}
-
-
-@api.route('/purchase-carts-ghop', methods=['POST'])
-def handle_purchase_carts_ghop2():
-    request_body = request.get_json()
-
-    customerQr = request_body["customerQr"]
-    deleted= 'false'
-
-    url = f'{os.getenv("BACKEND_URL_GHOP")}purchase-carts?customerQr={customerQr}&deleted={deleted}'
-    # print(url)
-    payload = {}
-    headers = {'X-Api-Key': os.getenv("API_KEY_GHOP"), 
-               'X-Language': 'es-ES'}
-
-    response = requests.request("GET", url, headers=headers, data=payload)
-    # print(response.text)
-
-    
-    response_body = json.loads(response.text)
-    customer = Customer.query.filter_by(customer_user_ghop=response_body[0]["customer"]["id"]).first()
-
-    if not customer:
-        customer = Customer(user_name=response_body[0]["customer"]["name"],
-                            customer_user_ghop=response_body[0]["customer"]["id"],)
-
-        db.session.add(customer)
-        db.session.commit()
-
-    
-    response_body[0]["customer"]["id"] = customer.id
-    # print(response_body[0])
-    return {'response': response_body}
 
 
 @api.route('/products-idcarts-products', methods=['POST'])
@@ -111,9 +103,7 @@ def handle_products_ghop():
     payload = {}
     headers = {'X-Api-Key': os.getenv("API_KEY_GHOP"), 
                'X-Language': 'es-ES'}
-
     response = requests.request("GET", url, headers=headers, data=payload)
-
     print(response.text)
     return {'response': response.text}
 
@@ -123,12 +113,9 @@ def handle_products_family_ghop():
     url = f'{os.getenv("BACKEND_URL_GHOP")}products/families'
     payload = {}
     headers = {'X-Api-Key': os.getenv("API_KEY_GHOP")}
-
     response = requests.request("GET", url, headers=headers, data=payload)
-
     print(response.text)
     return {'response': response.text}
-
 
 
 @api.route('/customers-ghop', methods=['GET'])
@@ -136,13 +123,33 @@ def handle_customers_ghop():
     url = f'{os.getenv("BACKEND_URL_GHOP")}customers'
     payload = {}
     headers = {'X-Api-Key': os.getenv("API_KEY_GHOP")}
-
     response = requests.request("GET", url, headers=headers, data=payload)
-
     print(response.text)
     return {'response': response.text}
 
 
+
+
+
+# Esto es la creación de cart, recibiendo antes el códigoQr del cliente
+@api.route('/purchase-carts', methods=['POST'])
+def handle_purchase_carts():
+    request_body = request.get_json()
+    customer_qr = request_body["customerQr"]
+    deleted= 'false'
+    url = f'{os.getenv("BACKEND_URL_GHOP")}purchase-carts?customerQr={customer_qr}&deleted={deleted}'
+    payload = {}
+    headers = {'X-Api-Key': os.getenv("API_KEY_GHOP"), 
+               'X-Language': 'es-ES'}
+    response = requests.request("GET", url, headers=headers, data=payload)
+    response_body = json.loads(response.text)
+    customer = Customer.query.filter_by(customer_user_ghop=response_body[0]["customer"]["id"]).first()
+    if not customer:
+        customer = Customer(user_name=response_body[0]["customer"]["name"],
+                            customer_user_ghop=response_body[0]["customer"]["id"],)
+        db.session.add(customer)
+        db.session.commit()
+    return {'results': response_body}, 200
 
 
 
