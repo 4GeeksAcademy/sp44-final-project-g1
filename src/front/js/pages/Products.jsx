@@ -23,7 +23,7 @@ export const Products = () => {
 		<div className="container-fluid" style={{ background: `url(${bgImg})`, backgroundSize: 'cover', backgroundAttachment: 'fixed', marginTop: '150px' }}>
 			<div className="container">
 				{/* <h3 className="container text-white mt-2">Coffes</h3> */}
-				<div className="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3">
+				<div className="row row-cols-1 row-cols-md-3 row-cols-xl-3 g-3">
 
 					{productsCategory.map((product) => {
 

@@ -12,7 +12,8 @@ header {
 
 .navbar {
   position: fixed;
-  margin-top: 60px;
+  margin-top: 70px;
+  height: 80px;
   z-index: 99;
   background: #121F28;
 }
@@ -36,6 +37,7 @@ header {
 
 .custom-nav-link:hover {
   background-color: #FF7700;
+  
 }
 
 .btn-onlogout {
@@ -57,23 +59,42 @@ header {
   /* max-height: 50%; */
 }
 
-.card-body {
+.card-footer {
   background: #0B1318; 
   border: #0B1318;
+  align-items: flex-start;
+  align-self: stretch;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 4.48px;
+  position: relative;
+  width: 100%;
 }
 
 .card-text {
   color: #FF7700;
 }
 
+.card-cesta {
+  max-width: 540px;
+  border: #0B1318;
+}
+
+.card-product {
+  border: #0B1318; 
+}
+
 .btn-block {
   background-color: #3BB8B8;
-  width: 80%;
+  width: 100%;
+  height: 50px;
+  /* align-items: flex-end;
+  display: flex!important; */
 }
 
 .fixed-cesta {
-  background: #121F28;
-  margin-top: 60px;
+  background: #0E1920;
   display: flex;
   flex-direction: column;
   justify-content:flex-start;
@@ -82,12 +103,37 @@ header {
   position: fixed;
   overflow-y: scroll;
   height: 100%;
+  flex-grow: 1;
+}
+
+.header-cesta {
+  margin-top: 72px;
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+.scrollable-content{
+  flex: 1;
+  overflow: auto;
+  height: 50px;
+  margin-left: 12px;
+  margin-right: 12px;
+  max-width: 100%; /* O el valor que consideres adecuado */
+  overflow-x: hidden;
+}
+
+.foother-cesta  {
+  border-top: 1px solid var(--white-cream);
+  padding: 16px;
 }
 
 .btn-cesta {
   background: #FF7701;
-  width: 100%;
-  margin-bottom: 60px
+  
+}
+
+.alert {
+  background: #121F28;
 }
 
 .gif-container {

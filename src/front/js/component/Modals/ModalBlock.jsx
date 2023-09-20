@@ -2,21 +2,21 @@ import React from "react";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-export const ModalLogOut = ({ show, onClose, onLogOut }) => {
+export const ModalBlock = ({ show, onBlock, onClose }) => {
 
     return (
         <>
             <Modal show={show} onHide={ onClose }>
                 <Modal.Header closeButton>
-                    <Modal.Title>Log Out</Modal.Title>
+                    <Modal.Title>Lock Screen</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Are you sure you want to log out?</Modal.Body>
+                <Modal.Body>Are you sure you want to lock the screen?</Modal.Body>
                 <Modal.Footer>
                     <Button className="btn-secondary btn-onclose" onClick={onClose}>
                         Close
                     </Button>
-                    <Button className="btn-info btn-onlogout" onClick={onLogOut}>
-                        Yes, Log Out
+                    <Button className="btn-info btn-onlogout" onClick={onBlock}>
+                        Yes, Lock Scren
                     </Button>
                 </Modal.Footer>
             </Modal>
@@ -24,4 +24,4 @@ export const ModalLogOut = ({ show, onClose, onLogOut }) => {
     );
 }
 
-ModalLogOut.prototype;
+ModalBlock.prototype;
