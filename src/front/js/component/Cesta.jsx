@@ -1,48 +1,62 @@
 import React, { useContext, useState } from "react";
-import { CardCesta, CardProduct } from "../pages/Cards";
+import { CardCesta } from "../pages/Cards";
 import { Context } from "../store/appContext.js";
 
 
 export const Cesta = () => {
 
-    const {store, actions} = useContext(Context);
+    const { store, actions } = useContext(Context);
 
     const selectProduct = store.selectProduct;
-    console.log(selectProduct);
+    console.log(selectProduct)
 
-    const total = selectProduct.reduce((accumulator, product) => {
-        return accumulator + product.pricing;
+    const totalCesta = selectProduct.reduce((total, product) => {
+        // Sumar el precio de cada producto multiplicado por su cantidad en la cesta
+        return total + product.pricing * product.quantity;
     }, 0);
 
-    return (
-        <div className="container col-4 fixed-cesta">
+    console.log(totalCesta)
 
-            <div>
-                <h3 style={{ color: '#3BB9B8', margin: '0' }}>Purchase cart</h3>
+    return (
+        <div className="container col-5 fixed-cesta">
+
+            <div className="header-cesta">
+                <h3 style={{ color: '#3BB9B8' }}>Purchase cart</h3>
                 <p> Customer: </p>
             </div>
 
             <div className="scrollable-content">
                 <p>Productos de la lista previa</p>
 
-                {
-                    selectProduct.map((product, id) => (
+                {totalCesta ?
+                    (selectProduct.map((product, id) => (
+
                         <CardCesta key={id} {...product} />
-                    ))
+
+                    ))) : (
+                        <div className="alert text-white text-center" role="alert">
+                            <i className="fa-solid fa-circle-exclamation"></i> There are no products
+                        </div>)
                 }
             </div>
 
-            <div className="row">
-                <p className="col-10">Total</p>
-                <p className="col-2"> {total} €</p>
-            </div>
+            <div className="row foother-cesta">
+                
+                <div className="row">
+                    <p className="col-10">Total</p>
+                    <p className="col-2 justify-content-end d-flex"> {totalCesta}€</p>
+                </div>
 
-            <div>
-                <button type="button" className="btn btn-cesta btn-lg btn-block">
-                    Process the order
-                </button>
+                <div>
+                    <button type="button" className="btn btn-cesta btn-lg btn-block mx-auto">
+                        Process the order
+                    </button>
+                </div>
+
             </div>
 
         </div>
     );
 }
+
+// Como conectar el endoponint

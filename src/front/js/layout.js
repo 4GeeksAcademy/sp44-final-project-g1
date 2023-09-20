@@ -21,19 +21,21 @@ const Layout = () => {
 
     const { store, actions } = useContext(Context)
 
-    if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
+    // if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
 
     return (
         <div>
             <BrowserRouter basename={basename}>
                 {/* { store.user ?  <Navbar /> : ''} */}
 
+                {store.block ? <BlockScreen/> : ''}
+
                 <Header />
 
                 <div className="d-flex justify-content-between">
 
-                    <div className="col-8">
-                       
+                    <div className="col-7">
+
                         <Navbar />
                         
                         <Routes>   
@@ -46,7 +48,7 @@ const Layout = () => {
 
                     </div>
                     
-                    <div className="col-4"> <Cesta /> </div>
+                    <div className="col-5"> <Cesta /> </div>
                 
                 </div>
                 {/* <Footer /> */}

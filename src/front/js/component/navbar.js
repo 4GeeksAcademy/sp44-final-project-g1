@@ -8,15 +8,15 @@ export const Navbar = () => {
 	const { store, actions } = useContext(Context)
 
 	const categories = store.categories
-	// const id = useParams()
+	const id = useParams()
 	// console.log(id)
-	console.log(categories)
+	// console.log(categories)
 
 	return (
-		<div className="navbar container-fluid col-8">
+		<div className="navbar container-fluid col-7">
 
-			<div className=" container nav-scroller py-1 border-bottom mt-0">
-				<nav className="d-grid gap-7 d-md-flex justify-content-md-center" >
+			<div className=" container nav-scroller py-1 mt-0">
+				<nav className="justify-content-md-center" >
 
 					<NavLink
 						className="custom-nav-link btn btn-lg btn-outline  me-1"
