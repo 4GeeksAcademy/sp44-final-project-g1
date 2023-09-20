@@ -56,10 +56,9 @@ def handle_purchase_carts_ghop():
     return {'response': response.text}
 
 
-@api.route('/products-idcarts-products', methods=['POST'])
-def handle_products_id_carts_products():
+@api.route('/products-idcarts-products2', methods=['POST'])
+def handle_products_id_carts_products2():
     carts_id = request # Data que recibimos del front
-    # user_id =
     products_id = 12  # Data que recibimos del front (debe ser uno de los que podemos vender)
     quantity = 5  # Data que recibimos del front
     url = f'{os.getenv("BACKEND_URL_GHOP")}/purchase-carts/{carts_id}/products'
@@ -144,6 +143,26 @@ def handle_purchase_carts():
                             customer_user_ghop=response_body[0]["customer"]["id"],)
         db.session.add(customer)
         db.session.commit()
+    return {'results': response_body}, 200
+
+
+# 3. 
+@api.route('/products-idcarts-products', methods=['POST'])
+def handle_products_id_carts_products():
+    request_body = request.get_json()
+    cart_id = request_body["cartId"]
+    product_id = request_body["productsId"]
+    quantity = request_body["quantity"]
+    # customer_id = request_body["customerId"]
+    
+    url = f'{os.getenv("BACKEND_URL_GHOP")}/purchase-carts/{cart_id}/products'
+    payload = json.dumps([{"id": product_id,
+                           "delta": quantity}])
+    headers = {'Content-Type': 'application/json',
+               'X-Api-Key': os.getenv("API_KEY_GHOP")}
+    response = requests.request("POST", url, headers=headers, data=payload)
+
+
     return {'results': response_body}, 200
 
 
