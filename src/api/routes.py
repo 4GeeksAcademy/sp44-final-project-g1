@@ -86,8 +86,11 @@ def handle_customers_ghop():
 def handle_open_store():
     request_body = request.get_json()
     vendor_qr = request_body["vendorQr"]
-    # TODO: Validar con endpoint de Ghop (aún no está el endpoint)
     response_body = {}
+
+    # TODO: Validar con endpoint de Ghop (aún no está el endpoint), verificar si está en nuestra db y si no está, crearlo
+    user = {"id": 1, "name": "Andrea"}
+    response_body["user"] = user
 
     # Traer las categorías y grabarla en nuestra base de datos e ir armando nuestro response_body
     url = f'{os.getenv("BACKEND_URL_GHOP")}products/families'
@@ -147,22 +150,22 @@ def handle_purchase_carts():
 
 
 # 3. 
-@api.route('/products-idcarts-products', methods=['POST'])
-def handle_products_id_carts_products():
+@api.route('/purchase-carts/<int:id>', methods=['POST'])
+def handle_purchase_carts_id(id):
     request_body = request.get_json()
-    cart_id = request_body["cartId"]
-    product_id = request_body["productsId"]
-    quantity = request_body["quantity"]
-    # customer_id = request_body["customerId"]
-    
-    url = f'{os.getenv("BACKEND_URL_GHOP")}/purchase-carts/{cart_id}/products'
-    payload = json.dumps([{"id": product_id,
-                           "delta": quantity}])
+    cart_id = id
+    print(request_body)
+    products= request_body["products"]  # products es una array de objetos {id: 4, delta: 5}
+    customer_id = request_body["customerId"]
+    url = f'{os.getenv("BACKEND_URL_GHOP")}purchase-carts/{cart_id}/products'
+    payload = json.dumps(products)
     headers = {'Content-Type': 'application/json',
-               'X-Api-Key': os.getenv("API_KEY_GHOP")}
+               'X-Api-Key': os.getenv("API_KEY_GHOP"),
+               'X-Language': 'es-ES'}
     response = requests.request("POST", url, headers=headers, data=payload)
-
-
+    response_body_ghop = json.loads(response.text)
+    # TODO: Grabar nuestro bill
+    response_body = {"status": "Ok", "Message": "Carrito cerrado correctamente"}
     return {'results': response_body}, 200
 
 

@@ -28,10 +28,8 @@ const Layout = () => {
             <BrowserRouter basename={basename}>
                 {/* { store.user ?  <Navbar /> : ''} */}
 
-                {store.block ? <BlockScreen/> : ''}
-
                 <Header />
-
+               
                 <div className="d-flex justify-content-between">
 
                     <div className="col-7">
@@ -43,15 +41,16 @@ const Layout = () => {
                             <Route element={<BlockScreen />} path="/blockscreen" />
                             <Route element={<Products />} path="/products" />
                             <Route element={<Products />} path="/products/:id" />                            
-                            <Route element={<Navigate to={"/products"} />} path="/*" />                            
+                            {/* <Route element={<Navigate to={"/login"} />} path="/*" />                             */}
                         </Routes>
 
                     </div>
                     
                     <div className="col-5"> <Cesta /> </div>
                 
-                </div>
-                {/* <Footer /> */}
+                </div> : 
+            
+
             </BrowserRouter>
         </div>
     );

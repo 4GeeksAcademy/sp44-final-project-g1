@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { CardCesta } from "../pages/Cards";
 import { Context } from "../store/appContext.js";
+// import { Login } from "../auth/Login.jsx";
 
 
 export const Cesta = () => {
@@ -12,12 +13,15 @@ export const Cesta = () => {
 
     const totalCesta = selectProduct.reduce((total, product) => {
         // Sumar el precio de cada producto multiplicado por su cantidad en la cesta
-        return total + product.pricing * product.quantity;
+        return total + product.price * product.quantity;
     }, 0);
 
     console.log(totalCesta)
 
     return (
+
+        !store.login ? '' :
+
         <div className="container col-5 fixed-cesta">
 
             <div className="header-cesta">

@@ -15,7 +15,7 @@ export const Products = () => {
 
 	// Filtrar los productos por categoría si categoryId tiene un valor válido
 	const productsCategory = categoryId
-		? store.products.filter((item) => item.category_id == categoryId) : store.products
+		? store.products.filter((item) => item.family == categoryId) : store.products
 
 	// console.log(productsCategory);
 

@@ -8,6 +8,7 @@ import { Context } from "../../store/appContext";
 export const CardProduct = ({ name, price }) => {
 
 	const { store, actions } = useContext(Context)
+	console.log(store.selectProduct)
 
 	const handleClick = () => {
 		actions.selectProduct({ name, price });
