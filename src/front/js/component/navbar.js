@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { Login } from "../auth/Login.jsx";
 
 
 export const Navbar = () => {
@@ -13,13 +14,15 @@ export const Navbar = () => {
 	// console.log(categories)
 
 	return (
+		!store.login ? '' :
+
 		<div className="navbar container-fluid col-7">
 
 			<div className=" container nav-scroller py-1 mt-0">
 				<nav className="justify-content-md-center" >
 
 					<NavLink
-						className="custom-nav-link btn btn-lg btn-outline  me-1"
+						className="custom-nav-link btn btn-lg btn-outline  mx-auto"
 						to={"/"}
 					>
 						All
