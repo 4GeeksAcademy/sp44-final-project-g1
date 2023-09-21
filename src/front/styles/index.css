@@ -31,7 +31,7 @@ header {
   color: #FF7700;
   border-color: #FF7700;
   background-color: transparent;
-  width: 100px;
+  min-width: 100px;
   /* Otros estilos personalizados aquí */
 }
 
@@ -76,13 +76,24 @@ header {
   color: #FF7700;
 }
 
+.card-text-price {
+  color: #c0c0c0;
+}
+
 .card-cesta {
   max-width: 540px;
   border: #0B1318;
+  background: #0B1318;
 }
 
+/* .card-container {
+  border: #0B1318;
+  display: grid;
+  gap: 20px;
+} */
+
 .card-product {
-  border: #0B1318; 
+  width: 100%; /* Haz que las tarjetas ocupen todo el espacio disponible en su columna */
 }
 
 .btn-block {

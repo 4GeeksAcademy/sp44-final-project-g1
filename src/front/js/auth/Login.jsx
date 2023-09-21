@@ -25,7 +25,7 @@ export const Login = () => {
                 <div className="container text-white" style={{ marginTop: '200px' }}>
                     <h1 className="text-center">Log in</h1>
                     {store.user.id && store.user.id != "" && store.user.id !== undefined ? (
-                        <p>You are logged in with this token: {store.user.name}</p>
+                        <p className="text-center">You are logged in with this token: {store.user.name}</p>
                     ) : (
                         <div>
                             <div className="d-grid gap-2">

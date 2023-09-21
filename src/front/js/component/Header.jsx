@@ -22,8 +22,7 @@ export const Header = () => {
     };
 
     const handleBlock = () => {
-        setShowModalBlock(true)
-        store.block(true)
+        setShowModalBlock(true);
     }
 
     const handleCloseModal = () => {
@@ -33,21 +32,23 @@ export const Header = () => {
 
     const handleLogOutConfirmed = () => {
         // Realiza la acción de logout aquí
-        navegate("/login", { replace: true });
+        actions.logOutApp(false)
+        navegate("/", { replace: true });
         // Cierra el modal después de realizar la acción
         handleCloseModal();
     };
 
     const handleBlockConfirmed = () => {
+        actions.blockApp(true)
         // Realiza la acción de logout aquí
-        navegate("/blockscreen", { replace: true });
+        // navegate("/blockscreen", { replace: true });
         // Cierra el modal después de realizar la acción
         handleCloseModal();
     };
 
     return (
         !store.login ? '' :
-        
+
             <header>
                 <div className="row flex-nowrap justify-content-between align-items-center">
                     {/* Logo */}
