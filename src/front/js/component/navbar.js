@@ -18,14 +18,14 @@ export const Navbar = () => {
 
 		<div className="navbar container-fluid col-7">
 
-			<div className=" container nav-scroller py-1 mt-0">
+			<div className=" container nav-scroller py-1">
 				<nav className="justify-content-md-center" >
 
 					<NavLink
-						className="custom-nav-link btn btn-lg btn-outline  mx-auto"
-						to={"/"}
+						className="custom-nav-link btn btn-lg btn-outline me-1"
+						to={"/products"}
 					>
-						All
+						ALL
 					</NavLink>
 
 					{categories.map((category) => {

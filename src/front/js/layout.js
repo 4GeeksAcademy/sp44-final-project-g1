@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { BackendURL } from "./component/backendURL";
 
@@ -28,28 +28,32 @@ const Layout = () => {
             <BrowserRouter basename={basename}>
                 {/* { store.user ?  <Navbar /> : ''} */}
 
-                <Header />
-               
-                <div className="d-flex justify-content-between">
+                {!store.login && <Login />}
+                {store.block && <BlockScreen />}
+                {store.login && !store.block &&
+                    <>
+                        <Header />
 
-                    <div className="col-7">
+                        <div className="d-flex justify-content-between">
 
-                        <Navbar />
-                        
-                        <Routes>   
-                            <Route element={<Login />} path="/login" />
-                            <Route element={<BlockScreen />} path="/blockscreen" />
-                            <Route element={<Products />} path="/products" />
-                            <Route element={<Products />} path="/products/:id" />                            
-                            {/* <Route element={<Navigate to={"/login"} />} path="/*" />                             */}
-                        </Routes>
+                            <div className="col-7">
 
-                    </div>
-                    
-                    <div className="col-5"> <Cesta /> </div>
-                
-                </div> : 
-            
+                                <Navbar />
+
+                                <Routes>
+                                    <Route element={<Login />} path="/" />
+                                    {/* <Route element={<BlockScreen />} path="/blockscreen" /> */}
+                                    <Route element={<Products />} path="/products" />
+                                    <Route element={<Products />} path="/products/:id" />
+                                    {/* <Route element={<Navigate to={"/login"} />} path="/*" />                             */}
+                                </Routes>
+
+                            </div>
+
+                            <div className="col-5"> <Cesta /> </div>
+
+                        </div>
+                    </>}
 
             </BrowserRouter>
         </div>
