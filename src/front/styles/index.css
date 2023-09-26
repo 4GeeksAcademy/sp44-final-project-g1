@@ -30,14 +30,13 @@ header {
 .custom-nav-link {
   color: #FF7700;
   border-color: #FF7700;
-  background-color: transparent;
+  /* background-color: transparent; */
   min-width: 100px;
-  /* Otros estilos personalizados aquí */
 }
 
-.custom-nav-link:hover {
-  background-color: #FF7700;
-  
+.custom-nav-link:hover,
+.custom-nav-link:active {
+  background-color: #FF7700 !important;
 }
 
 .btn-onlogout {
@@ -54,9 +53,14 @@ header {
 
 .half-card-img {
   width: 100%;
-  max-height: 200px;
+  /* max-height: 150px; */
   overflow: hidden;
-  /* max-height: 50%; */
+  max-height: 30%;
+}
+
+.card-img-cesta{
+  width: 100%;
+  height: 100%;
 }
 
 .card-footer {
@@ -86,22 +90,22 @@ header {
   background: #0B1318;
 }
 
-/* .card-container {
+.card-container {
   border: #0B1318;
   display: grid;
   gap: 20px;
-} */
+  align-items: start;
+}
 
 .card-product {
   width: 100%; /* Haz que las tarjetas ocupen todo el espacio disponible en su columna */
+  max-height: 350px;
 }
 
 .btn-block {
   background-color: #3BB8B8;
   width: 100%;
   height: 50px;
-  /* align-items: flex-end;
-  display: flex!important; */
 }
 
 .fixed-cesta {
@@ -129,7 +133,7 @@ header {
   height: 50px;
   margin-left: 12px;
   margin-right: 12px;
-  max-width: 100%; /* O el valor que consideres adecuado */
+  max-width: 100%;
   overflow-x: hidden;
 }
 
@@ -140,6 +144,7 @@ header {
 
 .btn-cesta {
   background: #FF7701;
+  height: 55px;
   
 }
 
@@ -148,8 +153,8 @@ header {
 }
 
 .gif-container {
-  width: 100vw; /* 100% del ancho de la ventana */
-  height: 100vh; /* 100% de la altura de la ventana */
+  width: 100vw; 
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -159,4 +164,37 @@ header {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 100vh;
+  width: 100vh;
+}
+
+.img-login {
+  max-width: 100%;
+  height: auto;
+}
+
+.btn-login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 80px; 
+  font-weight: 500;
+  font-size: 24px;
+}
+
+.toast {
+  background: white;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 20%;
 }

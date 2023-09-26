@@ -1,29 +1,29 @@
 import React, { useContext, useState } from "react";
-import coffeImg from "/workspaces/sp44-final-project-g1/src/front/img/category_id_1.jpg";
 import { Context } from "../../store/appContext.js";
-// import coffeImg from ".../../img/category_id_1.jpg";
+import {img1, img2, img3, img4, img5, img6}  from "../../../img/cards/images";
 
-export const CardCesta = ({ name, price, id }) => {
 
+export const CardCesta = ({ name, price, id, family }) => {
     const {store, actions} = useContext(Context);
     const [counter, setCounter] = useState(1);
-    
+
+    const imageMap = {1: img1, 2: img2, 3: img3, 4: img4, 5: img5, 6: img6}
+	const ruta = imageMap[family]
 
     const increment = () => {
         setCounter (counter +1)
-        actions.selectProduct( { name, price, id }, true)
+        actions.selectProduct( { name, price, id, family }, true)
     };
 
     const decrement = () => {
         // Si el contador es igual a 0 no decrementar mas
         if (counter === 0) return; 
         setCounter (counter -1)
-        actions.selectProduct({ name, price, id }, false)
+        actions.selectProduct({ name, price, id, family }, false)
     };
 
     const totalValue = price * counter;
 
-    // const reset = () => setCounter (initialValue);
 
     return (
         <div className="row flex-nowrap justify-content-between align-items-center">
@@ -31,7 +31,7 @@ export const CardCesta = ({ name, price, id }) => {
                 <div className="card card-cesta mx-auto mb-4">
                     <div className="row g-0">
                         <div className="col-md-4">
-                            <img src={coffeImg} className="card-img h-100" alt="..." />
+                            <img src={ ruta } className="card-img-cesta" alt={family} />
                         </div>
                         <div className="col-md-8">
                             <div className="card-body pb-3 text-white">
@@ -42,7 +42,6 @@ export const CardCesta = ({ name, price, id }) => {
                                         <p className="card-text"><small className="text-body-secondary">{counter} Unidades </small></p>
                                         <p className="card-text"><small className="text-body-secondary">Total price: {totalValue} €</small></p>
                                     </div>
-
                                     <div className="d-grid gap-2 d-md-flex d-flex align-items-end">
                                         <button className="btn btn-lg btn-block" onClick={ decrement }> <i className="fa-solid fa-minus"></i> </button>
                                         <button className="btn btn-lg btn-block" onClick={ increment }> <i className="fa-solid fa-plus"></i> </button>

@@ -4,12 +4,11 @@ import { Context } from "../store/appContext";
 
 
 export const BlockScreen = () => {
-
     const { store, actions } = useContext(Context)
 
     const handleClick = () => {
         actions.blockApp(false)
-    }
+    };
 
 
     return (
@@ -20,8 +19,5 @@ export const BlockScreen = () => {
                 alt="Logo"
             />
         </div>
-
-
-
     );
 }

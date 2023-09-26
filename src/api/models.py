@@ -24,8 +24,6 @@ class Customer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     customer_user_ghop = db.Column(db.Integer, unique=True, nullable=False)
     user_name = db.Column(db.String(200), unique=True, nullable=False)
-    # first_name = db.Column(db.String(50), unique=False, nullable=False)
-    # last_name = db.Column(db.String(50), unique=False, nullable=False)
 
 
     def __repr__(self):
