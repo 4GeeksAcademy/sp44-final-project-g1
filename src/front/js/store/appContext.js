@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import getState from "./flux.js";
 
-// Don't change, here is where we initialize our context, by default it's just going to be null.
+// initialize our context, by default it's just going to be null.
 export const Context = React.createContext(null);
 
 // This function injects the global store to any view/component where you want to use it, we will inject the context to layout.js, you can see it here:
@@ -28,9 +28,7 @@ const injectContext = PassedComponent => {
 			 * you should do your ajax requests or fetch api requests here. Do not use setState() to save data in the
 			 * store, instead use actions, like this:
 			 **/
-			// state.actions.getCategories();
-			// state.actions.getProducts();
-			// state.actions.getProductsGhop();
+			
 			// state.actions.login();
 			
 			// state.actions.getMessage(); // <---- calling this function from the flux.js actions

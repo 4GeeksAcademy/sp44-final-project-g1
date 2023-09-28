@@ -1,29 +1,24 @@
 import React, { useContext, useState } from "react";
-import logoGhop from "../../img/LogoGhop.png"
 import { Link, useNavigate } from "react-router-dom";
-import { ModalLogOut } from "./Modals/ModalLogOut.jsx";
-import { ModalBlock } from "./Modals/ModalBlock.jsx";
+import { ModalLogOut, ModalBlock } from "./Alerts";
 import { Context } from "../store/appContext";
-import { Login } from "../auth/Login.jsx";
+import logoGhop from "../../img/LogoGhop.png"
+
 
 export const Header = () => {
-
     const { store, actions } = useContext(Context);
-    console.log(store.block)
 
     const [showModalLogOut, setShowModalLogOut] = useState(false);
     const [showModalBlock, setShowModalBlock] = useState(false);
     const navegate = useNavigate()
 
     const handleLogOut = () => {
-
-        // store.login(false) implementar!!!!!!
         setShowModalLogOut(true);
     };
 
     const handleBlock = () => {
         setShowModalBlock(true);
-    }
+    };
 
     const handleCloseModal = () => {
         setShowModalLogOut(false);
@@ -31,7 +26,7 @@ export const Header = () => {
     };
 
     const handleLogOutConfirmed = () => {
-        // Realiza la acción de logout aquí
+        // Si se confirma logOut, logOutApp pasa a false
         actions.logOutApp(false)
         navegate("/", { replace: true });
         // Cierra el modal después de realizar la acción
@@ -40,8 +35,6 @@ export const Header = () => {
 
     const handleBlockConfirmed = () => {
         actions.blockApp(true)
-        // Realiza la acción de logout aquí
-        // navegate("/blockscreen", { replace: true });
         // Cierra el modal después de realizar la acción
         handleCloseModal();
     };
@@ -51,14 +44,12 @@ export const Header = () => {
 
             <header>
                 <div className="row flex-nowrap justify-content-between align-items-center">
-                    {/* Logo */}
                     <div className="col-4 pt-1">
                         <Link to="/products">
                             <img src={logoGhop} className="navbar-brand mx-2 logo-ghop" alt="Logo-Ghop"
                             />
                         </Link>
                     </div>
-
                     <div className="col d-flex justify-content-end align-items-center">
                         <div className="btn-group">
                             <button
@@ -77,7 +68,6 @@ export const Header = () => {
                                 onClick={handleLogOut}>
                                 <i className="far fa-circle-left"></i>
                             </button>
-
                         </div>
                     </div>
                 </div>

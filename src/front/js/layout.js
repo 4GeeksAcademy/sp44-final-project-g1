@@ -1,10 +1,9 @@
-import React, { useContext, useEffect } from "react";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { BackendURL } from "./component/backendURL";
+import React, { useContext } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import injectContext, { Context } from "./store/appContext";
 
-import { Navbar } from "./component/navbar";
+import { Navbar } from "./component/Navbar.jsx";
 import { Products } from "./pages/Products.jsx";
 import { Login } from "./auth/Login.jsx";
 import { Cesta } from "./component/Cesta.jsx";
@@ -12,8 +11,6 @@ import { Header } from "./component/Header.jsx";
 import { BlockScreen } from "./component/BlockScreen.jsx";
 
 
-
-//create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
     // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
@@ -26,7 +23,6 @@ const Layout = () => {
     return (
         <div>
             <BrowserRouter basename={basename}>
-                {/* { store.user ?  <Navbar /> : ''} */}
 
                 {!store.login && <Login />}
                 {store.block && <BlockScreen />}
@@ -35,26 +31,19 @@ const Layout = () => {
                         <Header />
 
                         <div className="d-flex justify-content-between">
-
                             <div className="col-7">
-
                                 <Navbar />
 
                                 <Routes>
                                     <Route element={<Login />} path="/" />
-                                    {/* <Route element={<BlockScreen />} path="/blockscreen" /> */}
                                     <Route element={<Products />} path="/products" />
-                                    <Route element={<Products />} path="/products/:id" />
-                                    {/* <Route element={<Navigate to={"/login"} />} path="/*" />                             */}
+                                    <Route element={<Products />} path="/products/:id" />                                    
                                 </Routes>
 
                             </div>
-
                             <div className="col-5"> <Cesta /> </div>
-
                         </div>
                     </>}
-
             </BrowserRouter>
         </div>
     );

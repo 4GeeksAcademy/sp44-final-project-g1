@@ -8,15 +8,15 @@ export const ModalBlock = ({ show, onBlock, onClose }) => {
         <>
             <Modal show={show} onHide={ onClose }>
                 <Modal.Header closeButton>
-                    <Modal.Title>Lock Screen</Modal.Title>
+                    <Modal.Title>Bloqueo de Pantalla</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Are you sure you want to lock the screen?</Modal.Body>
+                <Modal.Body>Esta seguro de bloquear la pantalla?</Modal.Body>
                 <Modal.Footer>
                     <Button className="btn-secondary btn-onclose" onClick={onClose}>
-                        Close
+                        No, Cerrar
                     </Button>
                     <Button className="btn-info btn-onlogout" onClick={onBlock}>
-                        Yes, Lock Scren
+                        Si, Bloquear
                     </Button>
                 </Modal.Footer>
             </Modal>
