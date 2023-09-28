@@ -43,10 +43,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (resp.status === 200) {
 						const data = await resp.json();
 						// 2.2 Actualizar en setSore todos los store (products, categories, user {id, name})
-						setStore({ categories: data.results.categories })
-						setStore({ products: data.results.products });
-						setStore({ user: data.results.user });
-						setStore({ login: true });
+						setStore({ 
+							categories: data.results.categories,
+							products: data.results.products,
+							user: data.results.user,
+							login: true
+						});
 					} else {
 						// 2.3 Se verifica si la respuesta del servidor tiene un estado diferente de 200 y si es asi generar alerta y return False
 						alert('There has been some error')
@@ -150,12 +152,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 							purchaseCarts: {},
 							openCarts: false
 						})
+						return true;
 					} else {
 						alert('There has been some error')
 					}
 				} catch (error) {
 					console.error('Error:', error)
 				}
+				return false;
 			}
 		}
 	};

@@ -9,6 +9,7 @@ export const Login = () => {
     const navigate = useNavigate();
 
     const onLogin = () => {
+        // TODO: Scanear Qr de vendor: 'vendorQr'
         actions.login('vendorQr')
         navigate('/products');
     };
@@ -28,7 +29,7 @@ export const Login = () => {
             ) : (
                 <div>
                     <div className="d-grid gap-2">
-                        <button type="button" className="btn-login btn btn-outline-light mt-5" onClick={onLogin}>Escanea tu Qr para empezar </button>
+                        <button type="button" className="btn-login btn btn-outline-light mt-5" onClick={onLogin}>Escanear QR para empezar</button>
                     </div>
                 </div>
             )}

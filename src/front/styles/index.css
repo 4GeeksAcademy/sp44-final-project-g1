@@ -30,13 +30,13 @@ header {
 .custom-nav-link {
   color: #FF7700;
   border-color: #FF7700;
-  /* background-color: transparent; */
   min-width: 100px;
 }
 
 .custom-nav-link:hover,
-.custom-nav-link:active {
+.custom-nav-link.active {
   background-color: #FF7700 !important;
+  color: #0A1216;
 }
 
 .btn-onlogout {
@@ -146,6 +146,10 @@ header {
   background: #FF7701;
   height: 55px;
   
+}
+
+.total-cesta {
+  font-size: 20px;
 }
 
 .alert {

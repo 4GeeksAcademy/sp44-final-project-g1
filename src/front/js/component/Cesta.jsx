@@ -23,17 +23,23 @@ export const Cesta = () => {
         actions.getPurchaseCarts("giro7g93")
     }
 
-    const handleProcessOrder = () => {
+    const handleProcessOrder = async () => {
         const order = selectProduct.map((item) => { return { id: item.id, delta: item.quantity } });
         // Enviar el id del cart, el del cliente y [] de productos
-        actions.closeCarts(store.purchaseCarts.id, store.purchaseCarts.customer.id, order);
+        const sendCart = await actions.closeCarts(store.purchaseCarts.id, store.purchaseCarts.customer.id, order);
         handleClose();
 
-        setShowToast(true);
+        if (sendCart) {
+            setShowToast(true);
 
-        setTimeout(() => {
-            setShowToast(false)
-        }, 3000);
+            setTimeout(() => {
+                setShowToast(false)
+            }, 3000);
+        } else {
+            alert("Error al enviar el carrito, intenta de nuevo")
+        }
+
+
     };
 
     const handelModal = () => {
@@ -57,10 +63,16 @@ export const Cesta = () => {
                         <h3 style={{ color: '#3BB9B8' }}>Carrito de compra</h3>
 
                         {store.purchaseCarts.id && store.purchaseCarts.id != "" && store.purchaseCarts.id !== undefined ? (
+
                             <h5 className="text-center">Cliente: {store.purchaseCarts.customer.name}</h5>) : (
                             <div>
                                 <div className="d-grid gap-2">
-                                    <button type="button" className="btn btn-outline-light mt-4" onClick={getCustomerQr}>Escanear Qr del cliente</button>
+                                    <div className="alert text-white text-center mt-4" role="alert">
+                                        Para agregar productos al carrito, escanear el código QR del cliente
+                                        <br />
+                                        <i className="fa-solid fa-angles-down"></i>
+                                    </div>
+                                    <button type="button" className="btn btn-outline-light" onClick={getCustomerQr}> Escanear QR</button>
                                 </div>
                             </div>
                         )}
@@ -88,8 +100,8 @@ export const Cesta = () => {
                             </table>
                         ) : (<span></span>)}
 
-                        {totalCesta ? (selectProduct.map((product) => (                                                            
-                                <CardCesta key={product.id} {...product}/>                                
+                        {totalCesta ? (selectProduct.map((product) => (
+                            <CardCesta key={product.id} {...product} />
                         ))) : (
                             <div className="alert text-white text-center mt-4" role="alert">
                                 <i className="fa-solid fa-circle-exclamation"></i> No hay productos en el carrito
@@ -98,8 +110,8 @@ export const Cesta = () => {
                     </div>
                     <div className="row foother-cesta">
                         <div className="row">
-                            <p className="col-10">Total</p>
-                            <p className="col-2 justify-content-end d-flex">
+                            <h5 className="col-10">Total</h5>
+                            <p className="col-2 justify-content-end d-flex total-cesta">
 
                                 {store.purchaseCarts.total ? totalCesta + store.purchaseCarts.total : totalCesta}€
 
