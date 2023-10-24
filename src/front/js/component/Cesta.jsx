@@ -19,8 +19,8 @@ export const Cesta = () => {
 
 
     const getCustomerQr = () => {
-        // TODO: Scanear Qr: "bj2bgk3l", "giro7g93", "i19ziip2"
-        actions.getPurchaseCarts("giro7g93")
+        // TODO: Scanear Qr: "bj2bgk3l"
+        actions.getPurchaseCarts("bj2bgk3l")
     }
 
     const handleProcessOrder = async () => {
