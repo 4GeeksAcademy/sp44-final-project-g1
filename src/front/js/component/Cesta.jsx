@@ -1,27 +1,31 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Context } from "../store/appContext.js";
 import { CardCesta } from "../pages/Cards";
 import { ModalProcessOrder, ToastCloseCart } from "./Alerts";
+import { useQrCode } from "../hooks/useQrCode.js";
 
 
 export const Cesta = () => {
     const { store, actions } = useContext(Context);
+    const { showInput, setShowInput, qrCode, startScan, handleScanCustomer} = useQrCode();
 
     const [showModalOrder, setShowModalOrder] = useState(false);
     const [showToast, setShowToast] = useState(false);
 
     const selectProduct = store.selectProduct;
 
+    const inputRef = useRef(null);
+
+    useEffect(() => {
+        if (inputRef.current) {
+            inputRef.current.focus(); // Enfoca el campo de entrada cuando se monta el componente
+        }
+    }, [showInput]); // El segundo argumento del useEffect es un array de dependencias, vacío en este caso para que se ejecute solo una vez
+
     const totalCesta = selectProduct.reduce((total, product) => {
         // Sumar el precio de cada producto multiplicado por su cantidad en la cesta
         return total + product.price * product.quantity;
     }, 0);
-
-
-    const getCustomerQr = () => {
-        // TODO: Scanear Qr: "bj2bgk3l"
-        actions.getPurchaseCarts("bj2bgk3l")
-    }
 
     const handleProcessOrder = async () => {
         const order = selectProduct.map((item) => { return { id: item.id, delta: item.quantity } });
@@ -31,9 +35,11 @@ export const Cesta = () => {
 
         if (sendCart) {
             setShowToast(true);
+            setShowInput(false);
 
             setTimeout(() => {
-                setShowToast(false)
+                setShowToast(false);
+                setShowInput(false);
             }, 3000);
         } else {
             alert("Error al enviar el carrito, intenta de nuevo")
@@ -43,8 +49,9 @@ export const Cesta = () => {
     };
 
     const handelModal = () => {
-        if (selectProduct.length < 1) return alert('Agregar productos al carrito')
-        setShowModalOrder(true)
+        if (selectProduct.length < 1)   //return alert('Agregar productos al carrito');
+        handleClose();
+        setShowModalOrder(true);
     }
 
     const handleClose = () => {
@@ -72,7 +79,18 @@ export const Cesta = () => {
                                         <br />
                                         <i className="fa-solid fa-angles-down"></i>
                                     </div>
-                                    <button type="button" className="btn btn-outline-light" onClick={getCustomerQr}> Escanear QR</button>
+                                    {showInput ? (
+                                        <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Ingresa el código QR del cliente"
+                                        value={qrCode}
+                                        onChange={handleScanCustomer} // Captura los cambios en el campo de entrada
+                                        ref={inputRef}
+                                    />
+                                    ):(
+                                    <button type="button" className="btn btn-outline-light" onClick={startScan}> Escanear QR</button>
+                                    )}
                                 </div>
                             </div>
                         )}
